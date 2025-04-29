@@ -1,0 +1,49 @@
+gsrWeatherStation ::= BEGIN 
+
+IMPORTS MODULE-IDENTITY, OBJECT-TYPE, experimental FROM SNMPv2-SMI;
+
+gsr MODULE-IDENTITY
+     LAST-UPDATED "201704200000Z"
+     ORGANIZATION "ESTIG-IPB"
+     CONTACT-INFO
+        "System And Network Management
+		Head: José Borges
+        Email: a39041@alunos.ipb.pt"
+
+     DESCRIPTION
+        "IPB's meteorological Weather Station for GSR"
+
+     REVISION
+        "201704200000Z"
+		
+     DESCRIPTION
+        "The last version of this MIB module"
+
+  ::= { enterprises 100 }
+
+-- 1.3.6.1.4.1
+gsrWeatherSensor OBJECT IDENTIFIER ::= { internet 1.3.6.1.4.1 private 1 enterprises 100 }
+
+--1.3.6.1.4.1.100.1, identifica o sensor de vento
+windSensor OBJECT IDENTIFIER ::= { gsrWeatherSensor 1 }
+--1.3.6.1.4.1.100.1.1 dentro do sensor de vento identifica a medicao do vento
+gsrWindGauge OBJECT IDENTIFIER ::= { windSensor 1 }
+--1.3.6.1.4.1.100.1.2 dentro do sensor do vento identifica a direcao do vento
+gsrWindDirection OBJECT IDENTIFIER ::= { windSensor 2 }
+
+
+gsrWindGauge OBJECT TYPE 
+	SYNTAX INTEGER
+	UNITS "m/s"
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Sensor medidor do vento em velocidade, medida em graus"
+
+gsrWindDirection OBJECT TYPE 
+	SYNTAX INTEGER (0..360)
+	UNITS "degree"
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Wind direction in degrees"
+	
+END gsrWeatherStation;
